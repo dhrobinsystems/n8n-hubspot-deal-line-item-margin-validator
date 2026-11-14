@@ -1,0 +1,36 @@
+{
+  "name": "n8n-hubspot-deal-line-item-margin-validator",
+  "version": "1.0.0",
+  "description": "n8n workflow and Node.js mirror that validates HubSpot deal line-item margins, discounts, floor prices, and bundles when a deal enters a proposal stage, then flags violations and routes approval tasks to sales leadership.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test test/margin.test.js",
+    "build:workflow": "node scripts/build-workflow.js",
+    "check:workflow": "node scripts/build-workflow.js --check",
+    "validate:workflow": "node scripts/validate-workflow.js",
+    "check:rules": "node src/index.js --check-rules",
+    "dry-run": "node src/index.js --fixture test/fixtures/deal-line-items.mock.json",
+    "verify": "npm run check:workflow && npm run validate:workflow && npm test",
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "n8n",
+    "hubspot",
+    "revops",
+    "deal-desk",
+    "margin",
+    "discount-approval",
+    "line-items",
+    "cpq"
+  ],
+  "author": "DH Robin (dhRobin Systems) <robin@dhrobinsystems.com> (https://dhrobinsystems.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhrobinsystems/n8n-hubspot-deal-line-item-margin-validator.git"
+  },
+  "private": false
+}
