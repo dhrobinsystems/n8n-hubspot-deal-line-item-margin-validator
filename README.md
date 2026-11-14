@@ -34,6 +34,8 @@ It ships as an **n8n workflow** (`workflow.json`, 28 nodes) and as a **dependenc
 
 ## Architecture
 
+![n8n HubSpot Deal Line-Item Margin Validator Workflow](assets/workflow-overview.png)
+
 ```
 HubSpot deal.propertyChange (dealstage)  ─or─  HubSpot workflow "Send a webhook"
                          │
