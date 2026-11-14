@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "description": "Example margin and discount rules. All SKUs, thresholds, and owner IDs are dummies; replace them with your own pricing policy.",
+  "currency_default": "USD",
+  "deal": {
+    "minimum_margin_pct": 35,
+    "target_margin_pct": 50,
+    "escalate_below_margin_pct": 20,
+    "max_discount_pct": 20
+  },
+  "product_rules": [
+    { "label": "Hardware SKU HW-1001", "match": { "sku": "HW-1001" }, "min_margin_pct": 15, "max_discount_pct": 5, "floor_unit_price": 800 },
+    { "label": "Software subscriptions", "match": { "sku_prefix": "SW-" }, "min_margin_pct": 60, "max_discount_pct": 25 },
+    { "label": "Professional services", "match": { "sku_prefix": "SVC-" }, "min_margin_pct": 30, "max_discount_pct": 10 },
+    { "label": "Support plans", "match": { "product_family": "support" }, "min_margin_pct": 55, "max_discount_pct": 15 }
+  ],
+  "bundles": [
+    { "name": "Platform Bundle", "required_skus": ["SW-1001", "SVC-2001"], "min_margin_pct": 45, "max_combined_discount_pct": 30 }
+  ],
+  "data_quality": {
+    "missing_cost_policy": "flag",
+    "default_cost_ratio": null,
+    "require_sku": true
+  },
+  "custom_pricing": {
+    "approved_price_property": "approved_custom_unit_price",
+    "product_family_property": "product_family"
+  },
+  "approval": {
+    "approver_owner_id": "your_hubspot_approver_owner_id_here",
+    "escalation_owner_id": "your_hubspot_escalation_owner_id_here",
+    "task_due_hours": 24
+  },
+  "deal_properties": {
+    "status": "margin_validation_status",
+    "margin_pct": "margin_validation_margin_pct",
+    "gross_profit": "margin_validation_gross_profit",
+    "max_discount_pct": "margin_validation_max_discount_pct",
+    "violations": "margin_validation_violations",
+    "approval_required": "margin_approval_required",
+    "checked_at": "margin_validation_checked_at",
+    "hash": "margin_validation_hash"
+  }
+}
