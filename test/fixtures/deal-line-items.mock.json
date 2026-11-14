@@ -1,0 +1,86 @@
+{
+  "description": "Synthetic HubSpot deals, line items, and products. Every ID, SKU, name, and amount is a dummy value.",
+  "cases": [
+    {
+      "name": "healthy_bundle_passes",
+      "expect": { "status": "passed", "marginPct": 60, "issueCodes": [] },
+      "deal": {
+        "id": "1001",
+        "properties": { "dealname": "Mock Deal Alpha", "dealstage": "contractsent", "pipeline": "default", "amount": "2000", "deal_currency_code": "USD", "hubspot_owner_id": "3001" },
+        "associations": { "line items": { "results": [{ "id": "5001", "type": "deal_to_line_item" }, { "id": "5002", "type": "deal_to_line_item" }] } }
+      },
+      "lineItems": [
+        { "id": "5001", "properties": { "name": "Mock Software Seat", "hs_sku": "SW-1001", "quantity": "10", "price": "100", "amount": "1000", "hs_product_id": "7001" } },
+        { "id": "5002", "properties": { "name": "Mock Onboarding Service", "hs_sku": "SVC-2001", "quantity": "5", "price": "200", "amount": "1000", "hs_cost_of_goods_sold": "120", "hs_product_id": "7002" } }
+      ],
+      "products": [
+        { "id": "7001", "properties": { "name": "Mock Software Seat", "hs_sku": "SW-1001", "price": "100", "hs_cost_of_goods_sold": "20" } },
+        { "id": "7002", "properties": { "name": "Mock Onboarding Service", "hs_sku": "SVC-2001", "price": "200", "hs_cost_of_goods_sold": "120" } }
+      ]
+    },
+    {
+      "name": "software_discount_needs_approval",
+      "expect": { "status": "approval_required", "marginPct": 56.92, "issueCodes": ["discount_above_max"] },
+      "deal": {
+        "id": "1002",
+        "properties": { "dealname": "Mock Deal Bravo", "dealstage": "decisionmakerboughtin", "pipeline": "default", "amount": "1300", "deal_currency_code": "USD", "hubspot_owner_id": "3001" },
+        "associations": { "line items": { "results": [{ "id": "5011" }, { "id": "5012" }] } }
+      },
+      "lineItems": [
+        { "id": "5011", "properties": { "name": "Mock Software Seat", "hs_sku": "SW-1001", "quantity": "10", "price": "100", "hs_discount_percentage": "30", "amount": "700", "hs_product_id": "7001" } },
+        { "id": "5012", "properties": { "name": "Mock Implementation", "hs_sku": "SVC-3001", "quantity": "4", "price": "150", "amount": "600", "hs_cost_of_goods_sold": "90", "hs_product_id": "7003" } }
+      ],
+      "products": [
+        { "id": "7001", "properties": { "name": "Mock Software Seat", "hs_sku": "SW-1001", "price": "100", "hs_cost_of_goods_sold": "20" } },
+        { "id": "7003", "properties": { "name": "Mock Implementation", "hs_sku": "SVC-3001", "price": "150", "hs_cost_of_goods_sold": "90" } }
+      ]
+    },
+    {
+      "name": "hardware_below_floor_escalates",
+      "expect": { "status": "escalation_required", "marginPct": 4, "issueCodes": ["line_margin_below_min", "discount_above_max", "below_floor_price", "custom_price_unapproved", "deal_margin_below_escalation"] },
+      "deal": {
+        "id": "1003",
+        "properties": { "dealname": "Mock Deal Charlie", "dealstage": "contractsent", "pipeline": "default", "amount": "1500", "deal_currency_code": "USD", "hubspot_owner_id": "3002" },
+        "associations": { "line items": { "results": [{ "id": "5021" }] } }
+      },
+      "lineItems": [
+        { "id": "5021", "properties": { "name": "Mock Appliance", "hs_sku": "HW-1001", "quantity": "2", "price": "750", "amount": "1500", "hs_cost_of_goods_sold": "720", "hs_product_id": "7004" } }
+      ],
+      "products": [
+        { "id": "7004", "properties": { "name": "Mock Appliance", "hs_sku": "HW-1001", "price": "1000", "hs_cost_of_goods_sold": "720" } }
+      ]
+    },
+    {
+      "name": "approved_custom_price_passes",
+      "expect": { "status": "passed", "marginPct": 44.44, "issueCodes": [] },
+      "deal": {
+        "id": "1004",
+        "properties": { "dealname": "Mock Deal Delta", "dealstage": "contractsent", "pipeline": "default", "amount": "1800", "deal_currency_code": "USD", "hubspot_owner_id": "3002" },
+        "associations": { "line items": { "results": [{ "id": "5031" }] } }
+      },
+      "lineItems": [
+        { "id": "5031", "properties": { "name": "Mock Appliance", "hs_sku": "HW-1001", "quantity": "2", "price": "900", "amount": "1800", "hs_cost_of_goods_sold": "500", "hs_product_id": "7004", "approved_custom_unit_price": "900" } }
+      ],
+      "products": [
+        { "id": "7004", "properties": { "name": "Mock Appliance", "hs_sku": "HW-1001", "price": "1000", "hs_cost_of_goods_sold": "500" } }
+      ]
+    },
+    {
+      "name": "missing_cost_is_incomplete",
+      "expect": { "status": "incomplete_data", "marginPct": 80, "issueCodes": ["missing_cost"] },
+      "deal": {
+        "id": "1005",
+        "properties": { "dealname": "Mock Deal Echo", "dealstage": "contractsent", "pipeline": "default", "amount": "1500", "deal_currency_code": "USD", "hubspot_owner_id": "3001" },
+        "associations": { "line items": { "results": [{ "id": "5041" }, { "id": "5042" }] } }
+      },
+      "lineItems": [
+        { "id": "5041", "properties": { "name": "Mock Software Seat", "hs_sku": "SW-1001", "quantity": "10", "price": "100", "amount": "1000", "hs_product_id": "7001" } },
+        { "id": "5042", "properties": { "name": "Mock Analytics Add-on", "hs_sku": "SW-2002", "quantity": "5", "price": "100", "amount": "500", "hs_product_id": "7005" } }
+      ],
+      "products": [
+        { "id": "7001", "properties": { "name": "Mock Software Seat", "hs_sku": "SW-1001", "price": "100", "hs_cost_of_goods_sold": "20" } },
+        { "id": "7005", "properties": { "name": "Mock Analytics Add-on", "hs_sku": "SW-2002", "price": "100" } }
+      ]
+    }
+  ]
+}
